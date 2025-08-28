@@ -1,11 +1,14 @@
 // Imports
-import express from "express";
 import dotenv from "dotenv";
-import session from "express-session";
-import flash from "connect-flash";
-import passport from "passport";
+import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import session from "express-session";
+import flash from "connect-flash";
+import passport from "./config/passport.js";
+import pool from "./config/db.js";
+
+import authRoutes from "./routes/authRoutes.js";
 
 // Load .env variables
 dotenv.config();
@@ -42,9 +45,22 @@ app.use(passport.session());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Routes (TEMP) <- CHANGE LATER
+// Routes
 app.get("/", (req, res) => {
   res.render("index", { title: "ReelTalk", message: req.flash("info") });
+});
+
+app.use("/", authRoutes);
+
+// Test DB connection (REMOVE LATER)
+app.get("/db-test", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.send(`Database time: ${result.rows[0].now}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("DB connection failed.");
+  }
 });
 
 // Initialize server
