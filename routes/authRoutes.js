@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
   try {
     const match = await User.findByEmail(email);
-    if (!match) {
+    if (match) {
       req.flash("error", "Email already taken");
       return res.redirect("/register");
     }

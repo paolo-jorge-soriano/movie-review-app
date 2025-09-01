@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Middleware
+// Middleware - START
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -40,6 +40,14 @@ app.use(flash());
 // Passport setup
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Persist user session
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
+// Middleware - END
 
 // View engine
 app.set("view engine", "ejs");

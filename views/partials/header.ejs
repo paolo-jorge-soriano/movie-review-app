@@ -3,6 +3,14 @@
   <nav>
     <a href="/">Home</a>
     <a href="/movies">Movies</a>
-    <a href="/login">Login</a>
-  </nav>
+
+    <% if (!currentUser) { %>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } else { %>
+      <p>Welcome, <%= currentUser.username %></p>
+      <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+      </form>
+    <% } %>
 </header>
