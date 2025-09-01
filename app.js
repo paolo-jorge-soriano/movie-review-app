@@ -9,6 +9,7 @@ import passport from "./config/passport.js";
 import pool from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
+import movieRoutes from "./routes/movieRoutes.js";
 
 // Load .env variables
 dotenv.config();
@@ -59,6 +60,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", authRoutes);
+app.use("/", movieRoutes);
 
 // Test DB connection (REMOVE LATER)
 app.get("/db-test", async (req, res) => {

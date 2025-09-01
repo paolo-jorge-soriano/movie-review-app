@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+
+    <h2><%= movie.Title %> (<%= movie.Year %>)</h2>
+    <img
+      src="<%= movie.Poster !== 'N/A' ? movie.Poster : '/icons/no-poster.jpg' %>"
+      alt="poster"
+      style="height: 300px"
+    />
+
+    <p><strong>Genre:</strong> <%= movie.Genre %></p>
+    <p><strong>Plot:</strong> <%= movie.Plot %></p>
+    <p><strong>Director:</strong> <%= movie.Director %></p>
+    <p><strong>Actors:</strong> <%= movie.Actors %></p>
+    <p><strong>IMDB Rating:</strong> <%= movie.imdbRating %></p>
+
+    <a href="/movies?q=<%= movie.Title %>">← Back to search</a>
+
+    <%- include('../partials/footer') %>
+  </body>
+</html>

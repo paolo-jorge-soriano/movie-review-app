@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <h2>Search Movies</h2>
+    <form method="GET" action="/movies">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search by title..."
+        value="<%= typeof q !== 'undefined' ? q : '' %>"
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
+
+    <ul>
+      <% if (movies.length === 0) { %>
+      <li>No results found.</li>
+      <% } else { %> <% movies.forEach(movie => { %>
+      <li>
+        <img
+          src="<%= movie.Poster !== 'N/A' ? movie.Poster : '/icons/no-image.jpg' %>"
+          alt="poster"
+          style="height: 100px"
+        />
+        <a href="/movies/<%= movie.imdbID %>"><%= movie.Title %> (<%= movie.Year %>)</a>
+      </li>
+      <% }) %> <% } %>
+    </ul>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
