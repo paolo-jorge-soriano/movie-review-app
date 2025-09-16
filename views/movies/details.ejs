@@ -22,8 +22,34 @@
     <p><strong>Actors:</strong> <%= movie.Actors %></p>
     <p><strong>IMDB Rating:</strong> <%= movie.imdbRating %></p>
 
-    <a href="/movies?q=<%= movie.Title %>">← Back to search</a>
+    <a href="/movies">← Back to search</a>
 
-    <%- include('../partials/footer') %>
+    <h3>Reviews</h3>
+    <% if (reviews.length === 0) { %>
+    <p>No reviews yet. Be the first to review!</p>
+    <% } else { %>
+    <ul>
+      <% reviews.forEach(r => { %>
+      <li>
+        <strong><%= r.username %></strong> rated <%= r.rating %>/5<br />
+        <%= r.review_text %><br />
+        <small><%= r.created_at.toLocaleString() %></small>
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if (currentUser) { %>
+    <h3>Leave a Review</h3>
+    <form action="/movies/<%= movie.imdbID %>/reviews" method="POST">
+      <label>Rating (1-5):</label>
+      <input type="number" name="rating" min="1" max="5" required /><br />
+
+      <label>Comment:</label><br />
+      <textarea name="comment" rows="3" cols="40" required></textarea><br />
+
+      <button type="submit">Submit Review</button>
+    </form>
+    <% } else { %>
+    <p><a href="/login">Login</a> to leave a review.</p>
+    <% } %> <%- include('../partials/footer') %>
   </body>
 </html>

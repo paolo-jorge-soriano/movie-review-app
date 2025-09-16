@@ -1,5 +1,5 @@
 import axios from "axios";
-import pool from "../config/db.js";
+import { getReviewsByMovie } from "./reviewController.js";
 
 const OMDB_API = "http://www.omdbapi.com/";
 
@@ -26,7 +26,7 @@ export async function searchMovies(req, res) {
 }
 
 export async function movieDetails(req, res) {
-  const imdbID = req.params.id;
+  const imdbID = req.params.imdbID;
 
   try {
     const response = await axios.get(OMDB_API, {
@@ -37,7 +37,10 @@ export async function movieDetails(req, res) {
     });
 
     const movie = response.data;
-    res.render("movies/details", { title: movie.Title, movie });
+
+    // Fetch reviews
+    const reviews = await getReviewsByMovie(imdbID);
+    res.render("movies/details", { title: movie.Title, movie, reviews });
   } catch (err) {
     console.log(err);
     res.redirect("/movies");

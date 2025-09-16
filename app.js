@@ -10,6 +10,7 @@ import pool from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 // Load .env variables
 dotenv.config();
@@ -61,6 +62,7 @@ app.get("/", (req, res) => {
 
 app.use("/", authRoutes);
 app.use("/", movieRoutes);
+app.use("/movies", reviewRoutes);
 
 // Test DB connection (REMOVE LATER)
 app.get("/db-test", async (req, res) => {
