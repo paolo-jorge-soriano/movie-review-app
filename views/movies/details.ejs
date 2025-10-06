@@ -32,14 +32,16 @@
       <% reviews.forEach(r => { %>
       <li>
         <strong><%= r.username %></strong> rated <%= r.rating %>/5<br />
-        <%= r.review_text %><br />
+        <%= r.comment %><br />
         <small><%= r.created_at.toLocaleString() %></small>
       </li>
       <% }) %>
     </ul>
     <% } %> <% if (currentUser) { %>
     <h3>Leave a Review</h3>
-    <form action="/movies/<%= movie.imdbID %>/reviews" method="POST">
+    <form action="/reviews" method="POST">
+      <input type="hidden" name="movie_id" value="<%= movie.imdbID %>" />
+
       <label>Rating (1-5):</label>
       <input type="number" name="rating" min="1" max="5" required /><br />
 

@@ -62,7 +62,7 @@ app.get("/", (req, res) => {
 
 app.use("/", authRoutes);
 app.use("/", movieRoutes);
-app.use("/movies", reviewRoutes);
+app.use("/reviews", reviewRoutes);
 
 // Test DB connection (REMOVE LATER)
 app.get("/db-test", async (req, res) => {
